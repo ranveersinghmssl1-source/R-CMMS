@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MSSL Applicator Master</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+    margin:0;
+}
+
+.header{
+    background:#003366;
+    color:white;
+    padding:15px;
+    text-align:center;
+}
+
+.container{
+    width:95%;
+    margin:auto;
+    margin-top:20px;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+
+.row{
+    display:flex;
+    gap:20px;
+    margin-bottom:15px;
+}
+
+.field{
+    flex:1;
+}
+
+label{
+    font-weight:bold;
+    display:block;
+    margin-bottom:5px;
+}
+
+input,
+select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+button{
+    background:#0078d7;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#005ea6;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:center;
+}
+
+th{
+    background:#003366;
+    color:white;
+}
+
+.active{
+    background:green;
+    color:white;
+    padding:4px 8px;
+    border-radius:4px;
+}
+
+.repair{
+    background:orange;
+    color:white;
+    padding:4px 8px;
+    border-radius:4px;
+}
+
+.inactive{
+    background:red;
+    color:white;
+    padding:4px 8px;
+    border-radius:4px;
+}
+
+.searchbox{
+    width:300px;
+    margin-bottom:20px;
+}
+
+.btn-warning{
+    background:#ffc107;
+    color:black;
+    padding:5px 10px;
+    text-decoration:none;
+    border-radius:4px;
+}
+
+.btn-danger{
+    background:#dc3545;
+    color:white;
+    padding:5px 10px;
+    text-decoration:none;
+    border-radius:4px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>MSSL Applicator Management System</h1>
+</div>
+
+<div class="container">
+
+<h2>Applicator Master Entry</h2>
+
+<form action="/save_applicator" method="POST">
+
+<div class="row">
+
+<div class="field">
+<label>Applicator No</label>
+<input type="text"
+       name="applicator_no"
+       placeholder="APP-001"
+       required>
+</div>
+
+<div class="field">
+<label>Applicator Name</label>
+<input type="text"
+       name="applicator_name"
+       placeholder="Applicator 040"
+       required>
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Machine Name</label>
+
+<select name="machine_name">
+<option>C&C-01</option>
+<option>MCR-01</option>
+<option>USW-01</option>
+<option>KAPPA-01</option>
+<option>Cable Cutting-01</option>
+</select>
+
+</div>
+
+<div class="field">
+<label>Terminal Part No</label>
+<input type="text"
+       name="terminal_part_no">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Store Location</label>
+<input type="text"
+       name="store_location">
+</div>
+
+<div class="field">
+<label>Rack No</label>
+<input type="text"
+       name="rack_no">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Bin No</label>
+<input type="text"
+       name="bin_no">
+</div>
+
+<div class="field">
+<label>Last Maintenance Date</label>
+<input type="date"
+       name="last_maintenance_date">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Status</label>
+
+<select name="status">
+<option>ACTIVE</option>
+<option>UNDER REPAIR</option>
+<option>INACTIVE</option>
+</select>
+
+</div>
+
+<div class="field">
+<label>Applicator Life</label>
+<input type="text"
+       name="applicator_life">
+</div>
+
+</div>
+
+<button type="submit">
+Save Applicator
+</button>
+
+</form>
+
+<hr>
+
+<h2>Applicator Inventory</h2>
+
+<div style="display:flex;gap:10px;margin-bottom:15px;align-items:center;">
+
+    <form method="GET" action="/applicator_master">
+        <input
+            class="searchbox"
+            type="text"
+            name="search"
+            placeholder="Search Applicator">
+
+        <button type="submit">
+            Search
+        </button>
+    </form>
+
+    <a href="/download_applicator_template">
+        <button type="button">
+            📥 Template
+        </button>
+    </a>
+
+    <form action="/upload_applicator_excel"
+          method="POST"
+          enctype="multipart/form-data">
+
+        <input type="file"
+               name="excel_file"
+               required>
+
+        <button type="submit">
+            📤 Upload Excel
+        </button>
+    </form>
+
+    <a href="/export_applicator_excel">
+        <button type="button">
+            📊 Export Excel
+        </button>
+    </a>
+
+</div>
+<table>
+
+<tr>
+<th>Applicator No</th>
+<th>Name</th>
+<th>Machine</th>
+<th>Terminal</th>
+<th>Location</th>
+<th>Rack</th>
+<th>Bin</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+{% for row in applicators %}
+
+<tr>
+
+<td>{{ row[1] }}</td>
+<td>{{ row[2] }}</td>
+<td>{{ row[3] }}</td>
+<td>{{ row[4] }}</td>
+<td>{{ row[5] }}</td>
+<td>{{ row[6] }}</td>
+<td>{{ row[7] }}</td>
+
+<td>
+
+{% if row[10] == 'ACTIVE' %}
+<span class="active">ACTIVE</span>
+
+{% elif row[10] == 'UNDER REPAIR' %}
+<span class="repair">UNDER REPAIR</span>
+
+{% else %}
+<span class="inactive">INACTIVE</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+<a href="/edit_applicator/{{ row[0] }}"
+   class="btn-warning">
+   Edit
+</a>
+
+<a href="/delete_applicator/{{ row[0] }}"
+   class="btn-danger"
+   onclick="return confirm('Delete Applicator ?')">
+   Delete
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="/admin">
+⬅ Back To Dashboard
+</a>
+
+</div>
+
+</body>
+</html>

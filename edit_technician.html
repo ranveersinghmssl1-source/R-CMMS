@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Technician</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI',sans-serif;
+    background:#f4f6f9;
+}
+
+.header{
+    background:linear-gradient(90deg,#003366,#0078d7);
+    color:white;
+    text-align:center;
+    padding:18px;
+}
+
+.container{
+    width:90%;
+    margin:20px auto;
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
+}
+
+.section-title{
+    color:#003366;
+    border-left:5px solid #0078d7;
+    padding-left:10px;
+    margin-bottom:20px;
+}
+
+.row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin-bottom:15px;
+}
+
+.field label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+    color:#003366;
+}
+
+input,
+select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+.button-area{
+    text-align:center;
+    margin-top:20px;
+}
+
+.btn-update{
+    background:#198754;
+    color:white;
+    text-decoration:none;
+    border:none;
+    padding:12px 25px;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.btn-back{
+    background:#6c757d;
+    color:white;
+    text-decoration:none;
+    padding:12px 25px;
+    border-radius:5px;
+    margin-left:10px;
+}
+
+.btn-update:hover{
+    background:#157347;
+}
+
+.btn-back:hover{
+    background:#5a6268;
+}
+
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>MSSL Technician Master</h1>
+</div>
+
+<div class="container">
+
+    <h2 class="section-title">
+        Edit Technician Information
+    </h2>
+
+    <form action="/update_technician/{{ technician[0] }}" method="POST">
+
+        <div class="row">
+
+            <div class="field">
+                <label>Technician ID</label>
+                <input type="text"
+                       name="technician_id"
+                       value="{{ technician[1] }}"
+                       required>
+            </div>
+
+            <div class="field">
+                <label>Technician Name</label>
+                <input type="text"
+                       name="technician_name"
+                       value="{{ technician[2] }}"
+                       required>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="field">
+                <label>Department</label>
+                <input type="text"
+                       name="department"
+                       value="{{ technician[3] }}">
+            </div>
+
+            <div class="field">
+                <label>Skill</label>
+                <input type="text"
+                       name="skill"
+                       value="{{ technician[4] }}">
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="field">
+                <label>Mobile_no</label>
+                <input type="text"
+                       name="mobile_no"
+                       value="{{ technician[5] }}">
+            </div>
+
+            <div class="field">
+                <label>Email</label>
+                <input type="email"
+                       name="email"
+                       value="{{ technician[6] }}">
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="field">
+                <label>Shift</label>
+                <input type="text"
+                       name="shift_name"
+                       value="{{ technician[7] }}">
+            </div>
+
+            <div class="field">
+                <label>Status</label>
+
+                <select name="status">
+
+                    <option value="ACTIVE"
+                    {% if technician[8]=='ACTIVE' %}
+                    selected
+                    {% endif %}>
+                    ACTIVE
+                    </option>
+
+                    <option value="INACTIVE"
+                    {% if technician[8]=='INACTIVE' %}
+                    selected
+                    {% endif %}>
+                    INACTIVE
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="button-area">
+
+            <button type="submit" class="btn-update">
+                ✅ Update Technician
+            </button>
+
+            <a href="/technician_master"
+               class="btn-back">
+               ← Back
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Spare Part</title>
+
+    <style>
+
+        body{
+            font-family:'Segoe UI',sans-serif;
+            background:#f4f6f9;
+            margin:0;
+        }
+
+        .header{
+            background:linear-gradient(90deg,#003366,#0078d7);
+            color:white;
+            text-align:center;
+            padding:20px;
+        }
+
+        .container{
+            width:95%;
+            max-width:1000px;
+            margin:20px auto;
+            background:white;
+            padding:25px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,.15);
+        }
+
+        .row{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:15px;
+            margin-bottom:15px;
+        }
+
+        label{
+            display:block;
+            font-weight:bold;
+            margin-bottom:5px;
+            color:#003366;
+        }
+
+        input,
+        select{
+            width:100%;
+            padding:10px;
+            border:1px solid #ccc;
+            border-radius:5px;
+            box-sizing:border-box;
+        }
+
+        .btn-save{
+            background:#0078d7;
+            color:white;
+            border:none;
+            padding:12px 25px;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        .btn-back{
+            background:#6c757d;
+            color:white;
+            padding:12px 25px;
+            border-radius:5px;
+            text-decoration:none;
+            margin-left:10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="header">
+    <h1>MSSL Spare Parts Master</h1>
+</div>
+
+<div class="container">
+
+<h2>Edit Spare Part</h2>
+
+<form action="/update_spare/{{ spare[0] }}" method="POST">
+
+<div class="row">
+
+    <div>
+        <label>Part Number</label>
+        <input type="text"
+               name="part_no"
+               value="{{ spare[1] }}"
+               required>
+    </div>
+
+    <div>
+        <label>Part Name</label>
+        <input type="text"
+               name="part_name"
+               value="{{ spare[2] }}"
+               required>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div>
+        <label>Category</label>
+        <input type="text"
+               name="category"
+               value="{{ spare[3] }}">
+    </div>
+
+    <div>
+        <label>Machine Name</label>
+        <input type="text"
+               name="machine_name"
+               value="{{ spare[4] }}">
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div>
+        <label>Store Location</label>
+        <input type="text"
+               name="store_location"
+               value="{{ spare[5] }}">
+    </div>
+
+    <div>
+        <label>Rack No</label>
+        <input type="text"
+               name="rack_no"
+               value="{{ spare[6] }}">
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div>
+        <label>Bin No</label>
+        <input type="text"
+               name="bin_no"
+               value="{{ spare[7] }}">
+    </div>
+
+    <div>
+        <label>Unit</label>
+        <input type="text"
+               name="unit"
+               value="{{ spare[8] }}">
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div>
+        <label>Current Stock</label>
+        <input type="number"
+               name="current_stock"
+               value="{{ spare[9] }}">
+    </div>
+
+    <div>
+        <label>Minimum Stock</label>
+        <input type="number"
+               name="minimum_stock"
+               value="{{ spare[10] }}">
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div>
+        <label>Status</label>
+
+        <select name="status">
+
+            <option value="ACTIVE"
+            {% if spare[11] == 'ACTIVE' %}selected{% endif %}>
+                ACTIVE
+            </option>
+
+            <option value="DEACTIVE"
+            {% if spare[11] == 'DEACTIVE' %}selected{% endif %}>
+                DEACTIVE
+            </option>
+
+        </select>
+
+    </div>
+
+</div>
+
+<button type="submit" class="btn-save">
+    ✅ Update Spare Part
+</button>
+
+<a href="/spare_parts_master" class="btn-back">
+    ⬅ Back
+</a>
+
+</form>
+
+</div>
+
+</body>
+</html>

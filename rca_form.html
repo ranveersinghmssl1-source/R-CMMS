@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MSSL Root Cause Analysis</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Segoe UI',sans-serif;
+background:#f4f6f9;
+}
+
+.header{
+background:linear-gradient(90deg,#003366,#0078d7);
+color:white;
+padding:15px;
+text-align:center;
+}
+
+.container{
+width:98%;
+margin:auto;
+padding:15px;
+background:white;
+margin-top:10px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+
+h2{
+color:#003366;
+margin-bottom:10px;
+font-size:20px;
+}
+
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+margin-bottom:10px;
+}
+
+.field label{
+font-weight:bold;
+display:block;
+margin-bottom:4px;
+font-size:14px;
+color:#003366;
+}
+
+input,
+select,
+textarea{
+width:100%;
+padding:8px;
+border:1px solid #ccc;
+border-radius:5px;
+font-size:14px;
+}
+
+textarea{
+height:70px;
+resize:none;
+}
+
+.card{
+background:#eef5ff;
+border-left:5px solid #0078d7;
+padding:10px;
+margin-bottom:15px;
+border-radius:5px;
+}
+
+.button-area{
+text-align:center;
+margin-top:15px;
+}
+
+button{
+background:#0078d7;
+color:white;
+border:none;
+padding:12px 30px;
+border-radius:5px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#005ea6;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+<h1>Root Cause Analysis (RCA)</h1>
+</div>
+
+<div class="container">
+
+<form action="/save_rca" method="POST">
+
+<div class="card">
+LPC & ASSY Breakdown Investigation Form
+</div>
+
+<h2>Breakdown Information</h2>
+
+<div class="row">
+
+<div class="field">
+<label>Ticket No</label>
+<input type="text"
+name="ticket_no"
+placeholder="LPC001">
+</div>
+
+<div class="field">
+<label>Date</label>
+<input type="date"
+name="rca_date">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Machine Name</label>
+<input type="text"
+name="machine_name"
+placeholder="C&C-01">
+</div>
+
+<div class="field">
+<label>Technician</label>
+<input type="text"
+name="responsible_person"
+placeholder="Kritsada">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Problem</label>
+<input type="text"
+name="problem_type"
+placeholder="Applicator Damage">
+</div>
+
+<div class="field">
+<label>Status</label>
+
+<select name="status">
+<option>OPEN</option>
+<option>PENDING</option>
+<option>CLOSED</option>
+</select>
+
+</div>
+
+</div>
+
+<h2>Downtime</h2>
+
+<div class="row">
+
+<div class="field">
+<label>Start Time</label>
+<input type="time"
+name="start_time">
+</div>
+
+<div class="field">
+<label>End Time</label>
+<input type="time"
+name="end_time">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Total Downtime (Min)</label>
+<input type="number"
+name="down_time"
+placeholder="25">
+</div>
+
+<div class="field">
+<label>Qty Used</label>
+<input type="number" placeholder="1">
+</div>
+
+</div>
+
+<h2>Spare Information</h2>
+
+<div class="row">
+
+<div class="field">
+<label>Part Used</label>
+<input type="text"
+name="part_number"
+placeholder="SP001">
+</div>
+
+<div class="field">
+<label>Part Number</label>
+<input type="text"
+name="part_used"
+placeholder="Applicator Blade">
+</div>
+
+</div>
+
+<h2>Root Cause & Action</h2>
+
+<div class="row">
+
+<div class="field">
+<label>Root Cause</label>
+<textarea
+name="root_cause"></textarea>
+</div>
+
+<div class="field">
+<label>Corrective Action</label>
+<textarea
+<textarea
+name="corrective_action"
+placeholder="Corrective Action">
+</textarea>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Countermeasure</label>
+<textarea
+name="countermeasure"
+placeholder="Countermeasure">
+</textarea>
+</div>
+
+<div class="field">
+<label>Remarks</label>
+<textarea
+name="remarks"
+placeholder="Remarks">
+</textarea>
+</div>
+
+</div>
+
+<div class="button-area">
+
+<button type="submit">
+✅ Save RCA
+</button>
+
+</div>
+
+</div>
+
+</body>
+</html>

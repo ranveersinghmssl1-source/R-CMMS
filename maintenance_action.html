@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Maintenance Action</title>
+
+<a href="/maintenance_history"
+style="
+background:#0078d7;
+color:white;
+padding:10px 15px;
+text-decoration:none;
+border-radius:5px;
+margin-right:10px;
+">
+
+Maintenance History
+
+</a>
+
+<style>
+
+<div class="card">
+
+<h3>Maintenance History</h3>
+
+<a href="/maintenance_history">
+
+View History
+
+</a>
+
+</div>
+
+body{
+font-family:Segoe UI;
+background:#f4f6f9;
+margin:0;
+}
+
+.header{
+background:#003366;
+color:white;
+padding:15px;
+text-align:center;
+}
+
+.container{
+width:90%;
+margin:auto;
+margin-top:20px;
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0px 0px 10px rgba(0,0,0,.2);
+}
+
+.row{
+display:flex;
+gap:20px;
+margin-bottom:15px;
+}
+
+.field{
+flex:1;
+}
+
+label{
+font-weight:bold;
+display:block;
+margin-bottom:5px;
+}
+
+input,
+select,
+textarea{
+width:100%;
+padding:10px;
+border:1px solid #ccc;
+border-radius:5px;
+box-sizing:border-box;
+}
+
+textarea{
+height:100px;
+}
+
+button{
+background:#0078d7;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:5px;
+cursor:pointer;
+font-size:16px;
+}
+
+button:hover{
+background:#005ea6;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+<h1>Maintenance Action Form</h1>
+</div>
+
+<div class="container">
+
+<form action="/save_maintenance" method="POST">
+
+<div class="row">
+
+<div class="field">
+<label>Ticket No</label>
+<select
+name="ticket_no"
+id="ticket_no">
+
+{% for row in open_breakdowns %}
+
+<option
+value="{{ row[0] }}"
+data-machine="{{ row[1] }}"
+data-problem="{{ row[2] }}"
+data-date="{{ row[3] }}"
+data-time="{{ row[4] }}"
+>
+
+{{ row[0] }} -
+{{ row[1] }} -
+{{ row[2] }} -
+{{ row[4] }}
+
+</option>
+
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="field">
+
+<label>Breakdown Date</label>
+<input
+type="text"
+id="breakdown_date"
+readonly>
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+
+<label>Machine Name</label>
+<input
+type="text"
+name="machine_name"
+id="machine_name"
+readonly>
+
+</div>
+
+<div class="field">
+<label>Status</label>
+
+<select name="status">
+<option>OPEN</option>
+<option>PENDING</option>
+<option>CLOSED</option>
+</select>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Problem</label>
+<input
+type="text"
+name="problem_type"
+id="problem_type"
+readonly>
+
+</div>
+
+<div class="field">
+<label>Reason</label>
+<input
+type="text"
+name="root_cause"
+placeholder="Applicator Life Exceeded">
+</div>
+
+</div>
+
+<label>Action Taken</label>
+
+<textarea
+name="action_taken"
+placeholder="Describe maintenance action taken">
+</textarea>
+
+<br><br>
+
+<div class="row">
+
+<div class="field">
+<label>Part Used</label>
+<input
+type="text"
+name="part_used"
+placeholder="Applicator Blade">
+</div>
+
+<div class="field">
+<label>Qty Used</label>
+<input
+type="number"
+name="qty_used"
+placeholder="1">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Breakdown Start Time</label>
+<input
+type="time"
+name="start_time"
+id="start_time"
+readonly>
+</div>
+
+<div class="field">
+<label>Breakdown End Time</label>
+
+<input
+type="current_time"
+name="end_time"
+id="end_time"
+readonly>
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Total Downtime (Min)</label>
+<input
+type="number"
+name="down_time"
+placeholder="25">
+</div>
+
+<div class="field">
+<label>Technician Name</label>
+<input
+type="text"
+name="technician_name"
+placeholder="Kritsada">
+</div>
+
+</div>
+
+<label>Remarks</label>
+
+<textarea
+name="remarks"
+placeholder="Additional remarks">
+</textarea>>
+<br><br>
+
+<button type="submit">
+Save Maintenance Action
+</button>
+
+</form>
+
+</div>
+<script>
+
+function loadBreakdownData(){
+
+    let dropdown =
+    document.getElementById("ticket_no");
+
+    let selected =
+    dropdown.options[
+        dropdown.selectedIndex
+    ];
+
+    document.getElementById("machine_name").value =
+    selected.getAttribute("data-machine") || "";
+
+    document.getElementById("problem_type").value =
+    selected.getAttribute("data-problem") || "";
+
+    document.getElementById("breakdown_date").value =
+    selected.getAttribute("data-date") || "";
+
+    let startTime =
+    selected.getAttribute("data-time");
+
+    if(startTime){
+
+        document.getElementById("start_time").value =
+        startTime.substring(0,5);
+
+    }
+
+    // Auto End Time
+
+    let now = new Date();
+
+    let hour =
+    String(now.getHours()).padStart(2,'0');
+
+    let minute =
+    String(now.getMinutes()).padStart(2,'0');
+
+    document.getElementById("end_time").value =
+    hour + ":" + minute;
+
+}
+
+document.getElementById("ticket_no")
+.addEventListener(
+"change",
+loadBreakdownData
+);
+
+window.onload =
+loadBreakdownData;
+
+</script>
+</body>
+</html>

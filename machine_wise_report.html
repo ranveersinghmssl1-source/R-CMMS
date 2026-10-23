@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Machine Wise Breakdown Report</title>
+
+<style>
+
+body{
+    font-family:Segoe UI;
+    background:#f4f6f9;
+    margin:0;
+}
+
+.header{
+    background:#003366;
+    color:white;
+    padding:15px;
+    text-align:center;
+}
+
+.container{
+    width:95%;
+    margin:auto;
+    margin-top:20px;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0px 0px 10px rgba(0,0,0,.2);
+}
+
+.summary{
+    background:#eef4ff;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.search-box{
+    margin-bottom:20px;
+}
+
+input[type=text]{
+    padding:10px;
+    width:300px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    background:#0078d7;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#003366;
+    color:white;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:center;
+}
+
+tr:nth-child(even){
+    background:#f9f9f9;
+}
+
+.back-btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:10px 15px;
+    background:#28a745;
+    color:white;
+    text-decoration:none;
+    border-radius:5px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>📊 Machine Wise Breakdown Report</h1>
+
+</div>
+
+<div class="container">
+
+<div class="summary">
+
+<b>Total Machines with Breakdown Analysis</b>
+
+</div>
+
+<div class="search-box">
+
+<form action="/machine_wise_report" method="POST">
+
+<input
+type="text"
+name="machine_name"
+placeholder="Enter Machine Name">
+
+<button type="submit">
+
+🔍 Search
+
+</button>
+
+</form>
+
+</div>
+
+<table>
+
+<tr>
+<th>Rank</th>
+<th>Machine Name</th>
+<th>Total Breakdown</th>
+</tr>
+
+{% for row in report_data %}
+
+<tr>
+
+<td>{{ loop.index }}</td>
+
+<td>
+
+<a href="/machine_details/{{ row[0] }}">
+
+{{ row[0] }}
+
+</a>
+
+</td>
+
+<td>{{ row[1] }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<a href="/reports" class="back-btn">
+
+⬅ Back To Reports
+
+</a>
+
+</div>
+
+</body>
+
+</html>
+``

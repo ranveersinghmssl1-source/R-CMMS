@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MSSL Spare Issue</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Segoe UI',sans-serif;
+background:#f4f6f9;
+}
+
+.header{
+background:linear-gradient(90deg,#003366,#0078d7);
+color:white;
+padding:18px;
+text-align:center;
+}
+
+.container{
+width:95%;
+margin:auto;
+margin-top:15px;
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,.15);
+}
+
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+margin-bottom:15px;
+}
+
+.field label{
+display:block;
+font-weight:bold;
+margin-bottom:5px;
+color:#003366;
+}
+
+input,
+select,
+textarea{
+width:100%;
+padding:10px;
+border:1px solid #ccc;
+border-radius:5px;
+font-size:14px;
+}
+
+textarea{
+height:80px;
+resize:none;
+}
+
+.section-title{
+font-size:20px;
+margin-bottom:15px;
+color:#003366;
+border-left:5px solid #0078d7;
+padding-left:10px;
+}
+
+.button-area{
+text-align:center;
+margin-top:20px;
+}
+
+button{
+background:#dc3545;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:5px;
+cursor:pointer;
+font-size:16px;
+}
+
+button:hover{
+background:#b02a37;
+}
+
+.info-card{
+background:#fff3cd;
+padding:10px;
+border-left:5px solid #ffc107;
+border-radius:5px;
+margin-bottom:15px;
+}
+<style>
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+table th{
+    background:#003366;
+    color:white;
+    padding:10px;
+    text-align:center;
+    border:1px solid #dcdcdc;
+    font-weight:bold;
+}
+
+table td{
+    text-align:center;
+    padding:8px;
+    border:1px solid #dcdcdc;
+}
+
+table tr:nth-child(even){
+    background:#f8f9fa;
+}
+
+table tr:hover{
+    background:#e8f2ff;
+}
+
+</style>
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+<h1>Spare Issue Entry</h1>
+</div>
+
+<div class="container">
+
+<div class="info-card">
+Issue spare parts against breakdown ticket and update inventory stock.
+</div>
+
+<h2 class="section-title">
+Spare Issue Details
+</h2>
+
+<form action="/save_issue" method="POST">
+
+<div class="row">
+
+<div class="field">
+<label>Issue No</label>
+<input
+type="text"
+name="issue_no"
+placeholder="ISS-001">
+</div>
+
+<div class="field">
+<label>Date</label>
+<input
+type="date"
+name="issue_date"
+id="issue_date">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Ticket No</label>
+<input
+type="text"
+name="ticket_no"
+placeholder="LPC001">
+</div>
+
+<div class="field">
+<label>Machine Name</label>
+<input
+type="text"
+name="machine_name"
+id="machine_name"
+readonly>
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Part Number</label>
+<input
+type="text"
+name="part_no"
+id="part_no"
+list="part_list"
+placeholder="Enter or Select Part">
+
+<datalist id="part_list">
+
+{% for part in spare_parts %}
+
+<option value="{{ part[1] }}">
+    {{ part[2] }}
+</option>
+
+{% endfor %}
+
+</datalist>
+</div>
+
+<div class="field">
+<label>Part Name</label>
+<input
+type="text"
+name="part_name"
+id="part_name"
+readonly>
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Current Stock</label>
+<input
+type="number"
+name="current_stock"
+id="current_stock"
+readonly>
+</div>
+
+<div class="field">
+<label>Issue Quantity</label>
+<input
+type="number"
+name="issue_qty"
+placeholder="1">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Issued To</label>
+<input
+type="text"
+name="issued_to"
+placeholder="RANVEER SINGH">
+</div>
+
+<div class="field">
+<label>Department</label>
+
+<select name="department">
+<option>LPC</option>
+<option>ASSY</option>
+<option>Maintenance</option>
+</select>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Store Location</label>
+<input
+type="text"
+name="location"
+id="store_location"
+readonly>
+</div>
+
+<div class="field">
+<label>Rack / Bin Location</label>
+<input
+type="text"
+name="rack_location"
+id="rack_location"
+readonly>
+</div>
+
+</div>
+
+<label>Reason for Issue</label>
+
+<textarea
+name="reason"
+placeholder="Applicator damaged during production">
+</textarea>
+
+<br><br>
+
+<label>Remarks</label>
+
+<textarea
+name="remarks"
+placeholder="Additional Remarks">
+</textarea>
+
+<div class="button-area">
+
+<button type="submit">
+📤 Issue Spare
+</button>
+
+</div>
+
+</form>
+</form>
+
+<hr style="margin-top:30px;">
+
+<h2 class="section-title">
+📋 Spare Issue History
+</h2>
+
+<!-- SEARCH BLOCK SIRF EK BAAR -->
+
+<div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
+
+<form method="GET" action="/spare_issue">
+
+    <input
+    type="text"
+    name="search"
+    placeholder="Part No / Name"
+    style="width:180px;height:35px;">
+
+    <input
+    type="date"
+    name="from_date"
+    style="width:140px;height:35px;">
+
+    <input
+    type="date"
+    name="to_date"
+    style="width:140px;height:35px;">
+
+    <button type="submit">
+        🔍 Search
+    </button>
+
+</form>
+
+<a href="/export_issue_excel">
+
+    <button type="button">
+        📊 Export Excel
+    </button>
+
+</a>
+
+</div>
+
+<table style="width:100%;border-collapse:collapse;">
+
+<tr>
+    <th>Date</th>
+    <th>Issue No</th>
+    <th>Ticket No</th>
+    <th>Part No</th>
+    <th>Part Name</th>
+    <th>Qty</th>
+    <th>Machine</th>
+    <th>Issued To</th>
+    <th>Department</th>
+    <th>Location</th>
+    <th>Reason</th>
+</tr>
+
+{% for row in issue_history %}
+
+<tr>
+
+    <td>{{ row[2] }}</td>   <!-- Date -->
+<td>{{ row[1] }}</td>   <!-- Issue No -->
+<td>{{ row[3] }}</td>   <!-- Ticket No -->
+<td>{{ row[5] }}</td>   <!-- Part No -->
+<td>{{ row[6] }}</td>   <!-- Part Name -->
+<td>{{ row[7] }}</td>   <!-- Qty -->
+<td>{{ row[4] }}</td>   <!-- Machine -->
+<td>{{ row[8] }}</td>   <!-- Issued To -->
+<td>{{ row[9] }}</td>   <!-- Department -->
+<td>{{ row[10] }}</td>  <!-- Location -->
+<td>{{ row[12] }}</td>  <!-- Reason -->
+
+</tr>
+
+{% endfor %}
+
+</table>
+</div>
+<script>
+
+document.getElementById("part_no")
+.addEventListener("change", function(){
+
+    let partNo = this.value;
+
+    fetch("/get_part/" + partNo)
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        document.getElementById("part_name").value =
+        data.part_name || "";
+
+        document.getElementById("machine_name").value =
+        data.machine_name || "";
+
+        document.getElementById("current_stock").value =
+        data.current_stock || "";
+
+        document.getElementById("store_location").value =
+        data.store_location || "";
+
+        document.getElementById("rack_location").value =
+        (data.rack_no || "") + " / " +
+        (data.bin_no || "");
+
+    });
+
+});
+
+</script>
+<script>
+
+const today = new Date();
+
+const year = today.getFullYear();
+const month = String(today.getMonth()+1).padStart(2,'0');
+const day = String(today.getDate()).padStart(2,'0');
+
+document.getElementById("issue_date").value =
+`${year}-${month}-${day}`;
+
+</script>
+
+<script>
+
+document
+.getElementById("part_no")
+.addEventListener(
+"change",
+function(){
+
+    let partNo =
+    this.value;
+
+    fetch(
+    "/get_part/" + partNo
+    )
+
+    .then(response =>
+    response.json())
+
+    .then(data => {
+
+        document
+        .getElementById("part_name")
+        .value =
+        data.part_name || "";
+
+        document
+        .getElementById("current_stock")
+        .value =
+        data.current_stock || "";
+
+    });
+
+});
+
+</script>
+
+<script>
+
+document.getElementById("part_no")
+.addEventListener("change", function(){
+
+    let partNo = this.value;
+
+    fetch("/get_part/" + partNo)
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        document.getElementById(
+            "part_name"
+        ).value = data.part_name || "";
+
+        document.getElementById(
+            "current_stock"
+        ).value = data.current_stock || "";
+
+        document.getElementById(
+            "store_location"
+        ).value = data.store_location || "";
+
+        document.getElementById(
+            "rack_location"
+        ).value =
+            (data.rack_no || "") +
+            " / " +
+            (data.bin_no || "");
+
+    });
+
+});
+
+</script>
+</body>
+</html>

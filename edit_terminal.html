@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Terminal</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+    margin:0;
+}
+
+.header{
+    background:#004080;
+    color:white;
+    text-align:center;
+    padding:15px;
+}
+
+.container{
+    width:95%;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+
+.row{
+    display:flex;
+    gap:20px;
+    margin-bottom:15px;
+}
+
+.field{
+    flex:1;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+input,
+select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+.btn-update{
+    background:#198754;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.btn-update:hover{
+    background:#157347;
+}
+
+.btn-back{
+    background:#6c757d;
+    color:white;
+    text-decoration:none;
+    padding:12px 25px;
+    border-radius:5px;
+    margin-left:10px;
+}
+
+.btn-back:hover{
+    background:#5a6268;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>MSSL Terminal Master</h1>
+</div>
+
+<div class="container">
+
+<h2>Edit Terminal Information</h2>
+
+<form action="/update_terminal/{{ terminal[0] }}" method="POST">
+
+<div class="row">
+
+    <div class="field">
+        <label>Terminal Part No</label>
+        <input type="text"
+               name="terminal_part_no"
+               value="{{ terminal[1] }}"
+               required>
+    </div>
+
+    <div class="field">
+        <label>Terminal Name</label>
+        <input type="text"
+               name="terminal_name"
+               value="{{ terminal[2] }}"
+               required>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="field">
+        <label>Supplier</label>
+        <input type="text"
+               name="supplier"
+               value="{{ terminal[3] }}">
+    </div>
+
+    <div class="field">
+        <label>Machine Name</label>
+        <input type="text"
+               name="machine_name"
+               value="{{ terminal[4] }}">
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="field">
+        <label>Store Location</label>
+        <input type="text"
+               name="store_location"
+               value="{{ terminal[5] }}">
+    </div>
+
+    <div class="field">
+        <label>Rack No</label>
+        <input type="text"
+               name="rack_no"
+               value="{{ terminal[6] }}">
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="field">
+        <label>Bin No</label>
+        <input type="text"
+               name="bin_no"
+               value="{{ terminal[7] }}">
+    </div>
+
+    <div class="field">
+        <label>Current Stock</label>
+        <input type="number"
+               name="current_stock"
+               value="{{ terminal[8] }}">
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="field">
+        <label>Minimum Stock</label>
+        <input type="number"
+               name="minimum_stock"
+               value="{{ terminal[9] }}">
+    </div>
+
+    <div class="field">
+        <label>Status</label>
+
+        <select name="status">
+
+            <option value="ACTIVE"
+            {% if terminal[10]=='ACTIVE' %}
+            selected
+            {% endif %}>
+            ACTIVE
+            </option>
+
+            <option value="LOW STOCK"
+            {% if terminal[10]=='LOW STOCK' %}
+            selected
+            {% endif %}>
+            LOW STOCK
+            </option>
+
+            <option value="OBSOLETE"
+            {% if terminal[10]=='OBSOLETE' %}
+            selected
+            {% endif %}>
+            OBSOLETE
+            </option>
+
+        </select>
+
+    </div>
+
+</div>
+
+<button type="submit" class="btn-update">
+    ✅ Update Terminal
+</button>
+
+<a href="/terminal_master" class="btn-back">
+    ⬅ Back
+</a>
+
+</form>
+
+</div>
+
+</body>
+</html>

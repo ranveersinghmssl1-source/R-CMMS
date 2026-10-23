@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ASSY Breakdown Entry</title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f6f9;
+            margin:0;
+            padding:0;
+        }
+
+        .header{
+            background:#006400;
+            color:white;
+            padding:15px;
+            text-align:center;
+        }
+
+        .container{
+            width:80%;
+            margin:auto;
+            margin-top:20px;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,0.2);
+        }
+
+        h2{
+            color:#006400;
+        }
+
+        .row{
+            display:flex;
+            gap:20px;
+            margin-bottom:15px;
+        }
+
+        .field{
+            flex:1;
+        }
+
+        label{
+            display:block;
+            font-weight:bold;
+            margin-bottom:5px;
+        }
+
+        input,
+        select,
+        textarea{
+            width:100%;
+            padding:10px;
+            border:1px solid #ccc;
+            border-radius:5px;
+            box-sizing:border-box;
+        }
+
+        textarea{
+            height:120px;
+        }
+
+        .submit-btn{
+            background:#28a745;
+            color:white;
+            border:none;
+            padding:12px 25px;
+            border-radius:5px;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        .submit-btn:hover{
+            background:#1f7a33;
+        }
+
+        .status{
+            background:red;
+            color:white;
+            padding:8px 15px;
+            display:inline-block;
+            border-radius:5px;
+            font-weight:bold;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>MSSL ASSY Breakdown System</h1>
+</div>
+
+<div class="container">
+
+<h2>ASSY Breakdown Entry</h2>
+
+<p>
+Status :
+<span class="status">OPEN</span>
+</p>
+
+<form action="/save_assy" method="POST">
+
+<div class="row">
+
+<div class="field">
+<label>Ticket No</label>
+<input
+type="text"
+id="ticket_no"
+name="ticket_no"
+readonly>
+</div>
+
+<div class="field">
+<label>Date</label>
+<input
+type="date"
+id="breakdown_date"
+name="breakdown_date">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Shift</label>
+
+<select name="shift_name">
+<option>A Shift</option>
+<option>B Shift</option>
+<option>C Shift</option>
+</select>
+
+</div>
+
+<div class="field">
+<label>Breakdown Time</label>
+<input
+type="time"
+id="breakdown_time"
+name="breakdown_time">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Operator Name</label>
+<input
+type="text"
+name="operator_name">
+</div>
+
+<div class="field">
+<label>Employee ID</label>
+<input
+type="text"
+name="employee_id">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Machine</label>
+
+<select name="machine_name">
+
+<option>CKT Tester-01</option>
+<option>CKT Tester-02</option>
+<option>CPG-01</option>
+<option>Conveyor-01</option>
+
+</select>
+
+</div>
+
+<div class="field">
+<label>Priority</label>
+
+<select name="priority">
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+<option>Critical</option>
+</select>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Problem Type</label>
+
+<select name="problem_type">
+
+<option>CKT NG</option>
+<option>Conveyor Stop</option>
+<option>Sensor Fault</option>
+<option>Barcode Error</option>
+<option>Poka Yoke Alarm</option>
+
+</select>
+
+</div>
+
+<div class="field">
+<label>Line Name</label>
+<input
+type="text"
+name="line_name">
+</div>
+
+</div>
+
+<label>Description</label>
+
+<textarea
+name="description"
+placeholder="Enter Breakdown Description">
+</textarea>>
+
+<br><br>
+
+<button class="submit-btn" type="submit">
+Submit Breakdown
+</button>
+
+<input
+type="hidden"
+name="status"
+value="OPEN">
+
+</div>
+
+<script>
+
+// Auto Date
+
+const today = new Date();
+
+const year = today.getFullYear();
+const month = String(today.getMonth() + 1).padStart(2,'0');
+const day = String(today.getDate()).padStart(2,'0');
+
+document.getElementById("breakdown_date").value =
+`${year}-${month}-${day}`;
+
+
+// Auto Time
+
+const hours = String(today.getHours()).padStart(2,'0');
+const minutes = String(today.getMinutes()).padStart(2,'0');
+
+document.getElementById("breakdown_time").value =
+`${hours}:${minutes}`;
+
+
+
+// Auto Ticket Number
+
+const ticket =
+"ASSY-" +
+year +
+month +
+day +
+"-001";
+
+document.getElementById("ticket_no").value = ticket;
+
+</script>
+
+</body>
+</html>

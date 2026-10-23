@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Applicator</title>
+
+<style>
+
+body{
+    font-family:Segoe UI,sans-serif;
+    background:#f4f6f9;
+    margin:0;
+}
+
+.header{
+    background:linear-gradient(90deg,#003366,#0078d7);
+    color:white;
+    text-align:center;
+    padding:18px;
+}
+
+.container{
+    width:95%;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+
+.row{
+    display:flex;
+    gap:20px;
+    margin-bottom:15px;
+}
+
+.field{
+    flex:1;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+input,
+select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+.btn-update{
+    background:#198754;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.btn-back{
+    background:#6c757d;
+    color:white;
+    padding:12px 25px;
+    border-radius:5px;
+    text-decoration:none;
+    margin-left:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>MSSL Applicator Master</h1>
+</div>
+
+<div class="container">
+
+<h2>Edit Applicator</h2>
+
+<form action="/update_applicator/{{ applicator[0] }}" method="POST">
+
+<div class="row">
+
+<div class="field">
+<label>Applicator No</label>
+<input type="text"
+       name="applicator_no"
+       value="{{ applicator[1] }}"
+       required>
+</div>
+
+<div class="field">
+<label>Applicator Name</label>
+<input type="text"
+       name="applicator_name"
+       value="{{ applicator[2] }}"
+       required>
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Machine Name</label>
+<input type="text"
+       name="machine_name"
+       value="{{ applicator[3] }}">
+</div>
+
+<div class="field">
+<label>Terminal Part No</label>
+<input type="text"
+       name="terminal_part_no"
+       value="{{ applicator[4] }}">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Store Location</label>
+<input type="text"
+       name="store_location"
+       value="{{ applicator[5] }}">
+</div>
+
+<div class="field">
+<label>Rack No</label>
+<input type="text"
+       name="rack_no"
+       value="{{ applicator[6] }}">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Bin No</label>
+<input type="text"
+       name="bin_no"
+       value="{{ applicator[7] }}">
+</div>
+
+<div class="field">
+<label>Last Maintenance Date</label>
+<input type="date"
+       name="last_maintenance_date"
+       value="{{ applicator[8] if applicator[8] else '' }}">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Applicator Life</label>
+<input type="text"
+       name="applicator_life"
+       value="{{ applicator[9] }}">
+</div>
+
+<div class="field">
+<label>Status</label>
+
+<select name="status">
+
+<option value="ACTIVE"
+{% if applicator[10] == 'ACTIVE' %}
+selected
+{% endif %}
+>
+ACTIVE
+</option>
+
+<option value="UNDER REPAIR"
+{% if applicator[10] == 'UNDER REPAIR' %}
+selected
+{% endif %}
+>
+UNDER REPAIR
+</option>
+
+<option value="INACTIVE"
+{% if applicator[10] == 'INACTIVE' %}
+selected
+{% endif %}
+>
+INACTIVE
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+<button type="submit" class="btn-update">
+✅ Update Applicator
+</button>
+
+<a href="/applicator_master" class="btn-back">
+⬅ Back
+</a>
+
+</form>
+
+</div>
+
+</body>
+</html>

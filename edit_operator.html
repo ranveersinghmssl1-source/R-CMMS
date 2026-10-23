@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Edit Operator</title>
+
+<style>
+
+body{
+font-family:Segoe UI;
+background:#f4f6f9;
+margin:0;
+}
+
+.header{
+background:linear-gradient(90deg,#003366,#0078d7);
+color:white;
+padding:18px;
+text-align:center;
+}
+
+.container{
+width:80%;
+margin:auto;
+margin-top:20px;
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+margin-bottom:15px;
+}
+
+input,
+select{
+width:100%;
+padding:10px;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+button{
+background:#28a745;
+color:white;
+padding:10px 20px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+.back-btn{
+background:#6c757d;
+color:white;
+padding:10px 20px;
+text-decoration:none;
+border-radius:5px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>✏️ Edit Operator</h1>
+
+</div>
+
+<div class="container">
+
+<form action="/update_operator" method="POST">
+
+<div class="row">
+
+<div>
+
+<label>Employee ID</label>
+
+<input
+type="text"
+name="employee_id"
+value="{{ operator_data[0] }}"
+readonly>
+
+</div>
+
+<div>
+
+<label>Operator Name</label>
+
+<input
+type="text"
+name="operator_name"
+value="{{ operator_data[1] }}">
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div>
+
+<label>Department</label>
+
+<input
+type="text"
+name="department"
+value="{{ operator_data[2] }}">
+
+</div>
+
+<div>
+
+<label>Line Name</label>
+
+<input
+type="text"
+name="line_name"
+value="{{ operator_data[3] }}">
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div>
+
+<label>User Name</label>
+
+<input
+type="text"
+name="username"
+value="{{ operator_data[4] }}">
+
+</div>
+
+<div>
+
+<label>Password</label>
+
+<input
+type="text"
+name="password"
+value="{{ operator_data[5] }}">
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div>
+
+<label>Shift</label>
+
+<input
+type="text"
+name="shift_name"
+value="{{ operator_data[6] }}">
+
+</div>
+
+<div>
+
+<label>Status</label>
+
+<input
+type="text"
+name="status"
+value="{{ operator_data[7] }}">
+
+</div>
+
+</div>
+
+<button type="submit">
+
+✅ Update Operator
+
+</button>
+
+<a href="/operator_master" class="back-btn">
+
+⬅ Back
+
+</a>
+
+</form>
+
+</div>
+
+</body>
+
+</html>

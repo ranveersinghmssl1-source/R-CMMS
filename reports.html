@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MSSL Maintenance Reports</title>
+
+<style>
+
+body{
+font-family:Segoe UI,sans-serif;
+background:#f4f6f9;
+margin:0;
+}
+
+.header{
+background:#003366;
+color:white;
+padding:20px;
+text-align:center;
+font-size:24px;
+font-weight:bold;
+}
+
+.container{
+width:96%;
+margin:10px auto;
+background:white;
+padding:15px;
+border-radius:8px;
+box-shadow:0 2px 8px rgba(0,0,0,0.2);
+}
+
+.section-title{
+font-size:20px;
+font-weight:bold;
+margin-bottom:10px;
+color:#003366;
+}
+
+.summary{
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:15px;
+margin-bottom:20px;
+}
+
+.card{
+padding:15px;
+border-radius:5px;
+color:white;
+font-weight:bold;
+text-align:center;
+}
+
+.daily{
+background:#0078d7;
+}
+
+.weekly{
+background:#28a745;
+}
+
+.monthly{
+background:#ff9800;
+}
+
+label{
+font-weight:bold;
+}
+
+input{
+padding:8px;
+width:150px;
+}
+
+button{
+background:#0078d7;
+color:white;
+border:none;
+padding:8px 15px;
+border-radius:4px;
+cursor:pointer;
+}
+
+button:hover{
+background:#005ea6;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+}
+
+th{
+background:#003366;
+color:white;
+padding:10px;
+}
+
+td{
+padding:8px;
+border:1px solid #ddd;
+text-align:center;
+}
+
+.export-section{
+margin-top:20px;
+text-align:center;
+}
+
+.export-btn{
+background:#28a745;
+margin:5px;
+padding:10px 15px;
+}
+
+.export-btn:hover{
+background:#1f7a33;
+}
+
+.back{
+margin-top:15px;
+display:inline-block;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+MSSL Maintenance Reports
+</div>
+
+<div class="container">
+
+<div class="section-title">
+Breakdown Summary
+</div>
+
+<div class="summary">
+
+<div class="card daily">
+Daily Report<br>
+{{ daily_count }} Breakdowns
+</div>
+
+<div class="card weekly">
+Weekly Report<br>
+{{ weekly_count }} Breakdowns
+</div>
+
+<div class="card monthly">
+Monthly Report<br>
+{{ monthly_count }} Breakdowns
+</div>
+
+</div>
+
+<hr>
+
+<div class="section-title">
+Report Filter
+</div>
+
+<label>From Date</label><br>
+<input type="date">
+
+<br><br>
+
+<label>To Date</label><br>
+<input type="date">
+
+<br><br>
+
+<button>
+Generate Report
+</button>
+
+<hr>
+
+<div class="section-title">
+Breakdown Report Details
+</div>
+
+<table>
+
+<tr>
+<th>Ticket No</th>
+<th>Date</th>
+<th>Department</th>
+<th>Machine</th>
+<th>Problem</th>
+<th>Status</th>
+<th>Downtime</th>
+</tr>
+
+{% for row in report_data %}
+
+<tr>
+
+<td>{{ row[0] }}</td>
+
+<td>{{ row[1] }}</td>
+
+<td>LPC</td>
+
+<td>{{ row[2] }}</td>
+
+<td>{{ row[3] }}</td>
+
+{% if row[4] == 'CLOSED' %}
+
+<td style="color:green;font-weight:bold;">
+{{ row[4] }}
+</td>
+
+{% elif row[4] == 'OPEN' %}
+
+<td style="color:red;font-weight:bold;">
+{{ row[4] }}
+</td>
+
+{% elif row[4] == 'PENDING' %}
+
+<td style="color:orange;font-weight:bold;">
+{{ row[4] }}
+</td>
+
+{% else %}
+
+<td>
+{{ row[4] }}
+</td>
+
+{% endif %}
+
+<td>-</td>
+
+</tr>
+
+{% endfor %}
+
+<tr>
+<td>LPC002</td>
+<td>17-10-2026</td>
+<td>LPC</td>
+<td>MCR-01</td>
+<td>Sensor Fault</td>
+<td>PENDING</td>
+<td>40 Min</td>
+</tr>
+
+<tr>
+<td>ASSY001</td>
+<td>17-10-2026</td>
+<td>ASSY</td>
+<td>CKT Tester-01</td>
+<td>CKT NG</td>
+<td>OPEN</td>
+<td>15 Min</td>
+</tr>
+
+</table>
+
+<div class="export-section">
+
+<button class="export-btn">
+<a href="/export_breakdown_excel"
+class="export-btn">
+
+📊 Export Breakdown Excel
+
+</a>
+
+</a>
+</button>
+
+<button class="export-btn">
+📈 <a href="/export_rca_excel">
+Export RCA Excel
+</a>
+</button>
+
+<button class="export-btn">
+📦 <a href="/export_inventory_excel">
+Export Inventory Excel
+</a>
+</button>
+
+<button class="export-btn">
+📋 <a href="/export_monthly_report">
+Export Monthly Report
+</a>
+</button>
+
+</div>
+
+<hr>
+
+<div class="section-title">
+Available Reports
+</div>
+
+<table>
+
+<tr>
+<th>Report Type</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>
+<a href="/daily_report">
+Daily Report
+</a>
+</td>
+<td>Today's Breakdown Summary</td>
+</tr>
+
+<tr>
+<td>
+<a href="/weekly_report">
+Weekly Report
+</a>
+</td>
+<td>Weekly Machine Breakdown Analysis</td>
+</tr>
+
+<tr>
+<td>
+<a href="/monthly_report">
+Monthly Report
+</a>
+</td>
+<td>Monthly Maintenance Performance</td>
+</tr>
+
+<tr>
+<a href="/machine_wise_report">
+Machine Wise Report
+</a>
+
+<td>
+<a href="/machine_wise_report">
+Top Breakdown Machines
+</a>
+</td>
+``
+</tr>
+
+<tr>
+<td>
+<a href="/problem_wise_report">
+Problem Wise Report
+</a>
+</td>
+<td>Pareto Analysis</td>
+</tr>
+
+<tr>
+<td>
+
+<a href="/downtime_report">
+
+Downtime Report
+
+</a>
+
+</td>
+
+<td>Total Machine Downtime</td>
+</tr>
+
+<tr>
+<td><a href="/spare_consumption_report">
+
+Spare Consumption Report
+
+</a>
+<td>Used Spare Parts History</td>
+</tr>
+
+<tr>
+<td>
+
+<a href="/rca_report">
+
+RCA Report
+
+</a>
+
+</td>
+``
+<td>Root Cause Analysis Records</td>
+</tr>
+
+<tr>
+<td>
+
+<a href="/technician_report">
+
+Technician Performance Report
+
+</a>
+
+</td>
+<td>Technician Breakdown Handling</td>
+</tr>
+
+</table>
+
+<br>
+
+<a class="back" href="/admin">
+⬅ Back To Dashboard
+</a>
+
+</div>
+
+</body>
+</html>

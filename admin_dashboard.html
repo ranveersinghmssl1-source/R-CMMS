@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>MSSL Admin Dashboard</title>
+
+<style>
+...
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+<h1>MSSL Maintenance Management System</h1>
+<h3>Admin Dashboard</h3>
+</div>
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>MSSL Admin Dashboard</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Segoe UI',sans-serif;
+background:#f4f6f9;
+}
+
+.header{
+background:linear-gradient(90deg,#003366,#0078d7);
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.container{
+width:95%;
+margin:auto;
+padding:20px;
+}
+
+.section-title{
+color:#003366;
+margin:20px 0 10px;
+font-size:24px;
+font-weight:bold;
+border-left:5px solid #0078d7;
+padding-left:10px;
+}
+
+.card-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+gap:15px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:12px;
+text-align:center;
+box-shadow:0 3px 10px rgba(0,0,0,.15);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.card a{
+text-decoration:none;
+color:#003366;
+font-weight:bold;
+font-size:18px;
+}
+
+.icon{
+font-size:45px;
+margin-bottom:10px;
+}
+
+.footer{
+margin-top:30px;
+text-align:center;
+color:#666;
+font-size:14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+<div class="section-title">
+📊 System Overview
+</div>
+
+<div class="card-grid">
+
+<div class="card">
+<div class="icon">🏭</div>
+<h3>Total Machines</h3>
+<h1>{{ total_machine }}</h1>
+</div>
+
+<div class="card">
+<div class="icon">👷</div>
+<h3>Total Operators</h3>
+<h1>{{ total_operator }}</h1>
+</div>
+
+<div class="card">
+<div class="icon">🛠️</div>
+<h3>Total Technicians</h3>
+<h1>{{ total_technician }}</h1>
+</div>
+
+<div class="card">
+<div class="icon">👤</div>
+<h3>Total Users</h3>
+<h1>{{ total_user }}</h1>
+</div>
+
+<div class="card">
+<div class="icon">⚠️</div>
+<h3>Total Breakdown</h3>
+<h1>{{ total_breakdown }}</h1>
+</div>
+
+<div class="card">
+<div class="icon">🔴</div>
+<h3>Open Breakdown</h3>
+<h1>{{ open_breakdown }}</h1>
+</div>
+
+<div class="card">
+<div class="icon">✅</div>
+<h3>Closed Breakdown</h3>
+<h1>{{ closed_breakdown }}</h1>
+</div>
+
+<div class="card">
+
+<div class="icon">⚠️</div>
+
+<h3>Low Stock</h3>
+
+<h1>{{ low_stock_count }}</h1>
+
+</div>
+
+</div>
+<!-- MASTER DATA -->
+
+<div class="section-title">
+🏭 Master Data
+</div>
+
+<div class="card-grid">
+
+<div class="card">
+<div class="icon">🏭</div>
+<a href="/machine_master">
+Machine Master
+</a>
+</div>
+
+<div class="card">
+<div class="icon">👷</div>
+<a href="/operator_master">
+Operator Master
+</a>
+</div>
+
+<div class="card">
+<div class="icon">🛠️</div>
+<a href="/technician_master">
+Technician Master
+</a>
+</div>
+
+<div class="card">
+<div class="icon">⚠️</div>
+<a href="/problem_master">
+Problem Master
+</a>
+</div>
+
+<div class="card">
+<div class="icon">🔧</div>
+<a href="/applicator_master">
+Applicator Master
+</a>
+</div>
+
+<div class="card">
+<div class="icon">🔩</div>
+<a href="/terminal_master">
+Terminal Master
+</a>
+</div>
+
+<div class="card">
+<div class="icon">👤</div>
+<a href="/user_master">
+User Master
+</a>
+</div>
+
+</div>
+
+<!-- INVENTORY -->
+
+<div class="section-title">
+📦 Inventory Management
+</div>
+
+<div class="card-grid">
+
+<div class="card">
+<div class="icon">📦</div>
+<a href="/spare_parts_master">
+Spare Parts Master
+</a>
+</div>
+
+<div class="card">
+<div class="icon">📤</div>
+<a href="/spare_issue">
+Spare Issue
+</a>
+</div>
+
+<div class="card">
+<div class="icon">📥</div>
+<a href="/spare_receive">
+Spare Receive
+</a>
+</div>
+
+</div>
+
+<!-- OPERATIONS -->
+
+<div class="section-title">
+⚙️ Operations
+</div>
+
+<div class="card-grid">
+
+<div class="card">
+<div class="icon">📝</div>
+<a href="/lpc">
+LPC Breakdown
+</a>
+</div>
+
+<div class="card">
+<div class="icon">🏗️</div>
+<a href="/assy">
+ASSY Breakdown
+</a>
+</div>
+
+<div class="card">
+<div class="icon">✅</div>
+<a href="/maintenance_action">
+Maintenance Action
+</a>
+</div>
+
+<div class="card">
+<div class="icon">🔍</div>
+<a href="/rca">
+Root Cause Analysis
+</a>
+</div>
+
+</div>
+
+<!-- MONITORING -->
+
+<div class="section-title">
+📊 Monitoring & Reports
+</div>
+
+<div class="card-grid">
+
+<div class="card">
+<div class="icon">📊</div>
+<a href="/maintenance">
+Maintenance Dashboard
+</a>
+</div>
+
+<div class="card">
+<div class="icon">📈</div>
+<a href="/reports">
+Reports
+</a>
+</div>
+
+</div>
+<div class="section-title">
+📋 Recent Breakdown
+</div>
+
+<table style="
+width:100%;
+background:white;
+border-collapse:collapse;
+margin-top:10px;
+box-shadow:0 2px 10px rgba(0,0,0,.15);
+">
+
+<tr style="
+background:#003366;
+color:white;
+<table style="
+width:100%;
+background:white;
+border-collapse:collapse;
+margin-top:10px;
+margin-bottom:20px;
+">
+
+<tr style="
+background:#003366;
+color:white;
+">
+
+<th style="padding:12px;">Ticket No</th>
+<th style="padding:12px;">Machine</th>
+<th style="padding:12px;">Problem</th>
+<th style="padding:12px;">Status</th>
+
+</tr>
+
+{% for row in recent_breakdown %}
+
+<tr>
+
+<td style="padding:10px;border:1px solid #ddd;">
+{{ row[0] }}
+</td>
+
+<td style="padding:10px;border:1px solid #ddd;">
+{{ row[1] }}
+</td>
+
+<td style="padding:10px;border:1px solid #ddd;">
+{{ row[2] }}
+</td>
+
+<td style="padding:10px;border:1px solid #ddd;">
+{{ row[3] }}
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<div class="footer">
+MSSL LPC & ASSY Maintenance Management System
+</div>
+
+</div>
+
+</body>
+</html>

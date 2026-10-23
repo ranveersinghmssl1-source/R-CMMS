@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MSSL Operator Master</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Segoe UI',sans-serif;
+background:#f4f6f9;
+}
+
+.header{
+background:linear-gradient(90deg,#003366,#0078d7);
+color:white;
+padding:18px;
+text-align:center;
+}
+
+.container{
+width:95%;
+margin:auto;
+margin-top:15px;
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,.15);
+}
+
+.section-title{
+font-size:20px;
+margin-bottom:15px;
+color:#003366;
+border-left:5px solid #0078d7;
+padding-left:10px;
+}
+
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+margin-bottom:15px;
+}
+
+.field label{
+display:block;
+font-weight:bold;
+margin-bottom:5px;
+color:#003366;
+}
+
+input,
+select{
+width:100%;
+padding:10px;
+border:1px solid #ccc;
+border-radius:5px;
+font-size:14px;
+}
+
+.button-area{
+text-align:center;
+margin-top:20px;
+}
+
+button{
+background:#0078d7;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:5px;
+cursor:pointer;
+font-size:16px;
+}
+
+button:hover{
+background:#005ea6;
+}
+
+.info-card{
+background:#eef6ff;
+padding:12px;
+border-left:5px solid #0078d7;
+border-radius:5px;
+margin-bottom:15px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th{
+background:#003366;
+color:white;
+}
+
+th,td{
+padding:10px;
+border:1px solid #ddd;
+text-align:center;
+}
+
+.active{
+background:#28a745;
+color:white;
+padding:4px 8px;
+border-radius:4px;
+}
+
+.inactive{
+background:#dc3545;
+color:white;
+padding:4px 8px;
+border-radius:4px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+<h1>MSSL Operator Master</h1>
+</div>
+
+<div class="container">
+
+<div class="info-card">
+Manage LPC and ASSY Operator Information.
+</div>
+
+<h2 class="section-title">
+Operator Information
+</h2>
+
+<form action="/save_operator" method="POST">
+
+<div class="row">
+
+<div class="field">
+<label>Employee ID</label>
+<input
+type="text"
+name="employee_id"
+placeholder="OP001"
+required>
+</div>
+
+<div class="field">
+<label>Operator Name</label>
+<input
+type="text"
+name="operator_name"
+placeholder="Operator A"
+required>
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Department</label>
+
+<select name="department">
+<option>LPC</option>
+<option>ASSY</option>
+</select>
+
+</div>
+
+<div class="field">
+<label>Line Name</label>
+
+<select name="line_name">
+<option>Line-1</option>
+<option>Line-2</option>
+<option>Line-3</option>
+<option>ASSY-A</option>
+<option>ASSY-B</option>
+</select>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>User Name</label>
+<input
+type="text"
+name="username"
+placeholder="operatora"
+required>
+</div>
+
+<div class="field">
+<label>Password</label>
+<input
+type="password"
+name="password"
+placeholder="1234"
+required>
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Shift</label>
+
+<select name="shift_name">
+<option>A Shift</option>
+<option>B Shift</option>
+<option>C Shift</option>
+</select>
+
+</div>
+
+<div class="field">
+<label>Status</label>
+
+<select name="status">
+<option>ACTIVE</option>
+<option>INACTIVE</option>
+</select>
+
+</div>
+
+</div>
+
+<div class="button-area">
+
+<button type="submit">
+💾 Save Operator
+</button>
+
+</div>
+
+</form>
+
+<hr>
+
+<h2 class="section-title">
+Operator List
+</h2>
+<div class="search-box">
+
+<form action="/operator_master" method="GET">
+
+<input
+type="text"
+name="search_text"
+placeholder="🔍 Search Operator">
+
+<button type="submit">
+Search
+</button>
+
+<a href="/operator_master">
+Show All
+</a>
+</form>
+</div>
+<table>
+<table>
+<tr>
+<th>Employee ID</th>
+<th>Operator Name</th>
+<th>Department</th>
+<th>Line</th>
+<th>User Name</th>
+<th>Shift</th>
+<th>Status</th>
+<th>Edit</th>
+<th>Delete</th>
+
+</tr>
+
+{% for row in operator_data %}
+
+<tr>
+
+<td>{{ row[0] }}</td>
+
+<td>{{ row[1] }}</td>
+
+<td>{{ row[2] }}</td>
+
+<td>{{ row[3] }}</td>
+
+<td>{{ row[4] }}</td>
+
+<td>{{ row[5] }}</td>
+
+<td>
+
+{% if row[6] == 'ACTIVE' %}
+
+<span class="active">
+
+{{ row[6] }}
+
+</span>
+
+{% else %}
+
+<span class="inactive">
+
+{{ row[6] }}
+
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+<a href="/edit_operator/{{ row[0] }}">
+
+✏️ Edit
+
+</a>
+
+</td>
+
+<td>
+
+<a href="/delete_operator/{{ row[0] }}"
+onclick="return confirm('Delete this Operator?')">
+
+🗑 Delete
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>

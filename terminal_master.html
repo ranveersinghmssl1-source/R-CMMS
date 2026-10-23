@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MSSL Terminal Master</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f9;
+    margin:0;
+}
+
+.header{
+    background:#004080;
+    color:white;
+    text-align:center;
+    padding:15px;
+}
+
+.toolbar{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-bottom:15px;
+    flex-wrap:wrap;
+}
+
+.btn-warning{
+    background:#ffc107;
+    color:black;
+    padding:5px 10px;
+    border-radius:4px;
+    text-decoration:none;
+}
+
+.btn-danger{
+    background:#dc3545;
+    color:white;
+    padding:5px 10px;
+    border-radius:4px;
+    text-decoration:none;
+}
+
+.low-stock{
+    background:red;
+    color:white;
+    padding:4px 8px;
+    border-radius:4px;
+}
+
+.container{
+    width:95%;
+    margin:auto;
+    margin-top:20px;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0px 0px 10px rgba(0,0,0,0.2);
+}
+
+.row{
+    display:flex;
+    gap:20px;
+    margin-bottom:15px;
+}
+
+.field{
+    flex:1;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+input,
+select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+button{
+    background:#0078d7;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#005ea6;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:center;
+}
+
+th{
+    background:#004080;
+    color:white;
+}
+
+.active{
+    background:green;
+    color:white;
+    padding:5px 10px;
+    border-radius:5px;
+}
+
+.lowstock{
+    background:red;
+    color:white;
+    padding:5px 10px;
+    border-radius:5px;
+}
+
+.search{
+    width:300px;
+    margin-bottom:15px;
+}
+
+</style>
+
+<div class="toolbar">
+    Search
+    Template
+    Upload Excel
+    Export Excel
+</div>
+
+</head>
+
+<body>
+
+<div class="header">
+<h1>MSSL Terminal Master</h1>
+</div>
+
+<div class="container">
+
+<h2>Terminal Information</h2>
+
+<form action="/save_terminal" method="POST">
+
+<div class="row">
+
+<div class="field">
+<label>Terminal Part No</label>
+<input type="text"
+       name="terminal_part_no"
+       placeholder="T040123"
+       required>
+</div>
+
+<div class="field">
+<label>Terminal Name</label>
+<input type="text"
+       name="terminal_name"
+       placeholder="Terminal 040 Female"
+       required>
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Supplier</label>
+<input type="text"
+       name="supplier"
+       placeholder="Yazaki"
+       required>
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Supplier</label>
+<input type="text"
+       name="supplier">
+</div>
+
+<div class="field">
+<label>Associated Machine</label>
+
+<select name="machine_name">
+<option>C&C-01</option>
+<option>MCR-01</option>
+<option>USW-01</option>
+<option>KAPPA-01</option>
+<option>Cable Cutting-01</option>
+</select>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Store Location</label>
+<input type="text"
+       name="store_location">
+</div>
+
+<div class="field">
+<label>Rack No</label>
+<input type="text"
+       name="rack_no">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Bin No</label>
+<input type="text"
+       name="bin_no">
+</div>
+
+<div class="field">
+<label>Current Stock</label>
+<input type="number"
+       name="current_stock">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Minimum Stock</label>
+<input type="number"
+       name="minimum_stock">
+</div>
+
+<div class="field">
+<label>Status</label>
+
+<select name="status">
+<option>ACTIVE</option>
+<option>LOW STOCK</option>
+<option>OBSOLETE</option>
+</select>
+
+</div>
+
+</div>
+
+<button type="submit">
+Save Terminal
+</button>
+<form method="GET" action="/terminal_master">
+
+<hr>
+
+<h2>Terminal Inventory</h2>
+
+<div class="toolbar">
+
+    <form method="GET" action="/terminal_master">
+
+        <input type="text"
+               name="search"
+               placeholder="Search Terminal">
+
+        <button type="submit">
+            Search
+        </button>
+
+    </form>
+
+    <a href="/download_terminal_template">
+        <button type="button">
+            📥 Template
+        </button>
+    </a>
+
+    <form action="/upload_terminal_excel"
+          method="POST"
+          enctype="multipart/form-data">
+
+        <input type="file"
+               name="excel_file"
+               required>
+
+        <button type="submit">
+            📤 Upload Excel
+        </button>
+
+    </form>
+
+    <a href="/export_terminal_excel">
+        <button type="button">
+            📊 Export Excel
+        </button>
+    </a>
+
+</div>
+
+<table>
+
+<tr>
+    <th>Part No</th>
+    <th>Name</th>
+    <th>Machine</th>
+    <th>Location</th>
+    <th>Rack</th>
+    <th>Bin</th>
+    <th>Stock</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+
+{% for row in terminals %}
+
+<tr>
+
+    <td>{{ row[1] }}</td>
+    <td>{{ row[2] }}</td>
+    <td>{{ row[4] }}</td>
+    <td>{{ row[5] }}</td>
+    <td>{{ row[6] }}</td>
+    <td>{{ row[7] }}</td>
+
+    <td>
+        {% if row[8] <= row[9] %}
+            <span class="lowstock">
+                LOW STOCK
+            </span>
+        {% else %}
+            {{ row[8] }}
+        {% endif %}
+    </td>
+
+    <td>
+
+        {% if row[10] == 'ACTIVE' %}
+            <span class="active">
+                ACTIVE
+            </span>
+        {% else %}
+            <span class="lowstock">
+                {{ row[10] }}
+            </span>
+        {% endif %}
+
+    </td>
+
+    <td>
+
+        <a href="/edit_terminal/{{ row[0] }}"
+           class="btn-warning">
+            Edit
+        </a>
+
+        <a href="/delete_terminal/{{ row[0] }}"
+           class="btn-danger"
+           onclick="return confirm('Delete Terminal?')">
+            Delete
+        </a>
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="/admin">
+    ⬅ Back To Dashboard
+</a>
+</body>
+</form>
+</html>
